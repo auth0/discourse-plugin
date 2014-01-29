@@ -1,0 +1,11 @@
+auth0:
+  auth0_client_id:
+    default: ''
+  auth0_client_secret:
+    default: ''
+  auth0_domain:
+    default: 'YOUR-AUTH0-ACCOUNT.auth0.com'
+  auth0_callback_url:
+    default: 'http://your-discourse-url.com/auth/auth0/callback'
+  auth0_connection:
+    default: ''

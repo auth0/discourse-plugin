@@ -12,22 +12,16 @@ Run in your discourse root folder:
 $ git clone git@github.com:auth0/discourse-plugin.git plugins/auth0
 ```
 
-Modify `plugin.rb` and `assets/javascripts/auth0.js` with your Auth0's `client_id`, `client_secret` and `domain`.
+Modify __plugin.rb__ and __assets/javascripts/auth0.js__ with your Auth0's `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET`, `AUTH0_DOMAIN` and `AUTH0_CALLBACK` explained in the comments.
 
-Our client side asset will override the Discourse login popup, all the authentication flow happens on the same browser tab, so you have to do an small modification in this file `/app/controllers/users/omniauth_callbacks_controller.rb` in the complete route instead of:
+## But, I want to use the default discourse login mechanism + AD through Auth0
 
-```ruby
-    respond_to do |format|
-      format.html
-      format.json { render json: @data.to_client_hash }
-    end
-```
+Fine, put the settings as explained in the above section and also put the name of the auth0 connection you want to use in AUTH0_CONNECTION.
 
-redirect to home as follows:
+## TODO
 
-```ruby
-    redirect_to "/"
-```
+I couldn't make plugin settings works for this plugin.
+Any contributions are accepted.
 
 ## License
 

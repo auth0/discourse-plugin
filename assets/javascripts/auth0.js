@@ -14,8 +14,8 @@
       showLogin: function() {
         var widget = new Auth0Widget({
           domain:         'YOUR-ACCOUNT.auth0.com',
-          clientID:       'YOUR-CLIENT-ID',
-          callbackURL:    'http://localhost:4000/auth/auth0/callback'
+          clientID:       'YOUR-AUTH0-CLIENT-ID',
+          callbackURL:    'https://<YOUR DISCOURSE DOMAIN>/auth/auth0/callback'
         });
 
         widget.signin();
