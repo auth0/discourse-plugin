@@ -46,7 +46,7 @@ This is a [discourse](https://discourse.org) plugin to authenticate with Auth0.
 
 #### Single Sign On with Windows Authentication
 
-![windows auth](http://blog.auth0.com.s3.amazonaws.com/login_discourse_kerberos.gif)
+![windows auth](https://s3.amazonaws.com/blog.auth0.com/login_discourse_kerberos-2.gif)
 
 ### Using Discourse Login Dialog instead of Auth0
 
@@ -54,7 +54,7 @@ You can keep using Discourse Login dialog and integrate only a specific connecti
 
 Go to plugin.rb and change the `AUTH0_CONNECTION` with the connection name you want to use from Auth0.
 
-![](http://blog.auth0.com.s3.amazonaws.com/login_discourse_ad.gif)
+![](https://s3.amazonaws.com/blog.auth0.com/login_discourse_ad.gif)
 
 ## TODO
 
