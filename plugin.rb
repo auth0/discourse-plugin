@@ -16,6 +16,7 @@ AUTH0_CALLBACK = 'https://<YOUR DISCOURSE DOMAIN>/auth/auth0/callback'
 class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
   def after_authenticate(auth_token)
+    return super(auth_token) if AUTH0_CONNECTION != ''
 
     result = Auth::Result.new
 
