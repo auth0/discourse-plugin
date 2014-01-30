@@ -3,6 +3,8 @@ Discourse + Auth0
 
 This is a [discourse](https://discourse.org) plugin to authenticate with Auth0.
 
+![discourse login](https://dl.dropboxusercontent.com/u/21665105/discourse-login.gif)
+
 ## What do I get by using Auth0?
 
 * Support for Active Directory / LDAP (see [animated gif](#adding-active-directory--ldap))
@@ -32,15 +34,15 @@ This is a [discourse](https://discourse.org) plugin to authenticate with Auth0.
 
 #### Adding Active Directory / LDAP
 
-![](https://www.dropbox.com/s/d1br7nejmv0a0l8/ad-connection.gif?dl=1)
+![active directory config](https://dl.dropboxusercontent.com/u/21665105/ad-connection.gif)
 
 #### Adding Social Providers
 
-![](https://www.dropbox.com/s/oaidgrsriy51a4e/social-connections.gif?dl=1)
+![social providers config](https://dl.dropboxusercontent.com/u/21665105/social-connections.gif)
 
 #### Single Sign On Between multiple Discourse forums
 
-![](https://www.dropbox.com/s/kdlzaww1egqfgvo/sso-discourse.gif?dl=1)
+![single sign on](https://dl.dropboxusercontent.com/u/21665105/sso-discourse.gif)
 
 ### Using Discourse Login Dialog instead of Auth0
 
