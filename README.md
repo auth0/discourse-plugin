@@ -8,8 +8,8 @@ This is a [discourse](https://discourse.org) plugin to authenticate with Auth0.
 * Support for Active Directory / LDAP
   * No matter if Discourse is on the cloud or on-prem, it will work transparently
 * Support for other enterprise logins like SAML Protocol, Windows Azure AD, Salesforce, etc. All supported here: https://docs.auth0.com/identityproviders.
-* Support for social providers without having to add OmniAuth strategies by hand. Just turn on/off social providers (see #)
-* Support for Single Sign On with other Discourse instances and any other application in your account.
+* Support for social providers without having to add OmniAuth strategies by hand. Just turn on/off social providers (see ![section below](#adding-active-directory--ldap)
+* Support for Single Sign On with other Discourse instances and any other application in your account (see ![section below](#adding-active-directory--ldap).
 
 
 Auth0 is an authentication broker that support social identity providers but also enterprise identity providers like __Active Directory__, __Google Apps__, __Office 365__ and __Windows Azure AD__.
