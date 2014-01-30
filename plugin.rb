@@ -32,7 +32,11 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
       user = User.find_by_email(email)
 
-      if data[:email_verified] && !user && AUTH0_CONNECTION == ''
+      if !data[:email_verified] && user
+        raise "There is a registered user with this email already."
+      end
+
+      if !user && AUTH0_CONNECTION == ''
         user = User.new()
         user.email = email
         user.username = data[:nickname]
