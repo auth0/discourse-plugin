@@ -1,7 +1,9 @@
 Discourse + Auth0
 ========
 
-This is a [discourse](https://discourse.org) plugin to authenticate with Auth0.
+This is a [discourse](https://discourse.org) plugin to do Single Sign On using [Auth0](https://www.auth0.com).
+
+### Demo: https://community.auth0.com
 
 ![discourse login](https://dl.dropboxusercontent.com/u/21665105/discourse-login.gif)
 
