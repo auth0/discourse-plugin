@@ -1,22 +1,18 @@
 # name: auth0
 # about: Authenticate with auth0
-# version: 0.0.1
+# version: 1.0.0
 # authors: Jose Romaniello
 
 require 'auth/oauth2_authenticator'
 
-# TODO: move this to settings
-AUTH0_CLIENT_ID = 'YOUR-AUTH0-CLIENT-ID'
-AUTH0_CLIENT_SECRET = 'YOUR-AUTH0-CLIENT-SECRET'
-AUTH0_DOMAIN = '<YOUR-AUTH0-ACCOUNT>.auth0.com'
-AUTH0_CONNECTION = ''
-# PUT this on the js side too.
-AUTH0_CALLBACK = 'https://<YOUR DISCOURSE DOMAIN>/auth/auth0/callback'
+require File.dirname(__FILE__) + "/../../app/models/oauth2_user_info"
 
 class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
   def after_authenticate(auth_token)
-    return super(auth_token) if AUTH0_CONNECTION != ''
+    return super(auth_token) if SiteSetting.auth0_connection != ''
+
+    puts "hi! #{Oauth2UserInfo.class.name}"
 
     result = Auth::Result.new
 
@@ -37,14 +33,18 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
         raise "There is a registered user with this email already."
       end
 
-      if !user && AUTH0_CONNECTION == ''
+      if !user && SiteSetting.auth0_connection == ''
         user = User.new()
         user.email = email
-        user.username = data[:nickname]
+        user.username = data[:nickname].gsub(/[^\w*]/, '_')
         user.name = data[:name]
         user.active = true
         saved = user.save
-        Rails.logger.info "Error saving #{user.inspect}: #{user.errors.inspect}" unless saved
+
+        unless saved
+          Rails.logger.info "Error saving #{user.inspect}: #{user.errors.inspect}"
+          raise "error saving the user: #{user.errors.inspect}"
+        end
       end
 
       oauth2_user_info = Oauth2UserInfo.create(uid: oauth2_uid,
@@ -67,9 +67,9 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
   def register_middleware(omniauth)
     omniauth.provider :auth0,
-        AUTH0_CLIENT_ID,
-        AUTH0_CLIENT_SECRET,
-        AUTH0_DOMAIN
+        SiteSetting.auth0_client_id,
+        SiteSetting.auth0_client_secret,
+        SiteSetting.auth0_domain
   end
 end
 
@@ -129,30 +129,30 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   end
 end
 
-if AUTH0_CONNECTION == ''
-  register_asset "javascripts/auth0.js"
-  #Monkeypatch complete method to redirect back to root.
-  after_initialize do
-    Users::OmniauthCallbacksController.class_eval do
-      def complete
-        auth = request.env["omniauth.auth"]
-        auth[:session] = session
+register_asset "javascripts/auth0.js"
+# Monkeypatch complete method to redirect back to root.
+after_initialize do
+  class Users::OmniauthCallbacksController < ApplicationController
+    def complete
+      return super() if SiteSetting.auth0_connection != ''
 
-        authenticator = self.class.find_authenticator(params[:provider])
+      auth = request.env["omniauth.auth"]
+      auth[:session] = session
 
-        @data = authenticator.after_authenticate(auth)
-        @data.authenticator_name = authenticator.name
+      authenticator = self.class.find_authenticator(params[:provider])
 
-        if @data.user
-          user_found(@data.user)
-        elsif SiteSetting.invite_only?
-          @data.requires_invite = true
-        else
-          session[:authentication] = @data.session_data
-        end
+      @data = authenticator.after_authenticate(auth)
+      @data.authenticator_name = authenticator.name
 
-        redirect_to "/"
+      if @data.user
+        user_found(@data.user)
+      elsif SiteSetting.invite_only?
+        @data.requires_invite = true
+      else
+        session[:authentication] = @data.session_data
       end
+
+      redirect_to "/"
     end
   end
 end

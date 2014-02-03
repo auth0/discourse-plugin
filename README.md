@@ -22,15 +22,14 @@ This is a [discourse](https://discourse.org) plugin to do Single Sign On using [
 
 2. Run in your discourse root folder:
 
-  ```
-  $ git clone git@github.com:auth0/discourse-plugin.git plugins/auth0
-  ```
+	git clone git@github.com:auth0/discourse-plugin.git plugins/auth0
 
-3. Modify __plugin.rb__ and __assets/javascripts/auth0.js__ with your Auth0's:
+3. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
 
-<img src="https://docs.google.com/drawings/d/1-wQhQ8hu24C-a-TXNPjVEYiXt_78cTV7uOTgKlr-pbE/pub?w=681&amp;h=699">
+4. Configure the Auth0 plugin in the admin section
 
-4. Enjoy!
+<img src="http://blog.auth0.com.s3.amazonaws.com/ss-2014-02-03T14-32-49.png">̇</img>
+5. Enjoy!
 
 ----
 
@@ -54,7 +53,7 @@ This is a [discourse](https://discourse.org) plugin to do Single Sign On using [
 
 You can keep using Discourse Login dialog and integrate only a specific connection from Auth0. It will show up as another button like the social providers.
 
-Go to plugin.rb and change the `AUTH0_CONNECTION` with the connection name you want to use from Auth0.
+Go to admin site settings for Auth0 and change the `auth0_connection` with the connection name you want to use from Auth0.
 
 ![](https://s3.amazonaws.com/blog.auth0.com/login_discourse_ad.gif)
 
