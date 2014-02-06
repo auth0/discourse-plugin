@@ -18,18 +18,22 @@ This is a [discourse](https://discourse.org) plugin to do Single Sign On using [
 
 ## Installation
 
-1. Create an account on [Auth0](http://auth0.com) and register a new Rails application.
+-  Create an account on [Auth0](http://auth0.com) and register a new Rails application, __note: ignore the rails tutorial in Auth0__.
 
-2. Run in your discourse root folder:
+-  Run in your discourse root folder:
 
-	git clone git@github.com:auth0/discourse-plugin.git plugins/auth0
+```
+$ rake plugin:install repo=https://github.com/auth0/discourse-plugin name=auth0 
+$ rake assets:precompile 
+```
 
-3. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
+-  Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
 
-4. Configure the Auth0 plugin in the admin section
+-  Configure the Auth0 plugin in the admin section
 
 <img src="http://blog.auth0.com.s3.amazonaws.com/ss-2014-02-03T14-32-49.png">̇</img>
-5. Enjoy!
+
+-  Enjoy!
 
 ----
 
