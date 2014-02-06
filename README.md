@@ -24,6 +24,7 @@ This is a [discourse](https://discourse.org) plugin to do Single Sign On using [
 
 ```
 $ rake plugin:install repo=https://github.com/auth0/discourse-plugin name=auth0 
+$ rm -rf tmp public/assets
 $ rake assets:precompile 
 ```
 
