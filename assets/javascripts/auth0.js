@@ -26,7 +26,7 @@
   Discourse.ApplicationRoute.reopen({
     actions: {
       showLogin: function() {
-        if (!Discourse.SiteSettings.auth0_client_id && Discourse.SiteSettings.auth0_connection !== '') {
+        if (!Discourse.SiteSettings.auth0_client_id || Discourse.SiteSettings.auth0_connection !== '') {
           return this._super();
         }
         widget.signin();
