@@ -62,6 +62,16 @@ Go to admin site settings for Auth0 and change the `auth0_connection` with the c
 
 ![](https://s3.amazonaws.com/blog.auth0.com/login_discourse_ad.gif)
 
+
+### Give admin rights to an email
+
+```
+$ RAILS_ENV=production bundle exec rails c
+$ u = User.find_by_email('the-email-you-want-to-make-admin@whatever.com')
+$ u.admin = true
+$ u.save!
+```
+
 ## TODO
 
 * Add a plugin UI on the Admin section ot configure the secrets, etc.
