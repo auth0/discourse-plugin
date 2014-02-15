@@ -6,6 +6,15 @@
     new_script.onload = callback;
     document.head.appendChild(new_script);
   }
+  
+  function signinWithSSO() {
+    widget.getClient().getSSOData(function(err, ssodata) {
+      // if there is an SSO session, auto-login
+      if (ssodata.sso) {
+        widget.getClient().login({connection: ssodata.lastUsedConnection.name});
+      }
+    });
+  }
 
   var widget;
 
@@ -20,6 +29,12 @@
         clientID:    Discourse.SiteSettings.auth0_client_id,
         callbackURL: Discourse.SiteSettings.auth0_callback_url
       });
+
+      var currentUser = Discourse.User.current();
+      if (currentUser == null || undefined == currentUser) {
+         signinWithSSO();
+      }
+
     }, 300);
   });
 
@@ -35,4 +50,17 @@
     }
   });
 
+  Discourse.UserRoute.reopen({
+    actions: {
+      logout: function() {
+        Discourse.User.logout().then(function() {
+           // Reloading will refresh unbound properties
+           Discourse.KeyValueStore.abandonLocal();
+           // logout from SSO
+           widget.getClient().logout({returnTo: "http://" + Discourse.BaseUrl});
+        });
+      }
+    }
+  });
+  
 })();
