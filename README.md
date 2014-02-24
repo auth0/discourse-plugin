@@ -18,18 +18,23 @@ This is a [discourse](https://discourse.org) plugin to do Single Sign On using [
 
 ## Installation
 
-1. Create an account on [Auth0](http://auth0.com) and register a new Rails application.
+-  Create an account on [Auth0](http://auth0.com) and register a new Rails application, __note: ignore the rails tutorial in Auth0__.
 
-2. Run in your discourse root folder:
+-  Run in your discourse root folder:
 
-	git clone git@github.com:auth0/discourse-plugin.git plugins/auth0
+```
+$ rake plugin:install repo=https://github.com/auth0/discourse-plugin name=auth0 
+$ rm -rf tmp public/assets
+$ rake assets:precompile 
+```
 
-3. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
+-  Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
 
-4. Configure the Auth0 plugin in the admin section
+-  Configure the Auth0 plugin in the admin section
 
 <img src="http://blog.auth0.com.s3.amazonaws.com/ss-2014-02-03T14-32-49.png">̇</img>
-5. Enjoy!
+
+-  Enjoy!
 
 ----
 
@@ -56,6 +61,16 @@ You can keep using Discourse Login dialog and integrate only a specific connecti
 Go to admin site settings for Auth0 and change the `auth0_connection` with the connection name you want to use from Auth0.
 
 ![](https://s3.amazonaws.com/blog.auth0.com/login_discourse_ad.gif)
+
+
+### Give admin rights to an email
+
+```
+$ RAILS_ENV=production bundle exec rails c
+$ u = User.find_by_email('the-email-you-want-to-make-admin@whatever.com')
+$ u.admin = true
+$ u.save!
+```
 
 ## TODO
 

@@ -29,7 +29,7 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
       user = User.find_by_email(email)
 
-      if !data[:email_verified] && user
+      if !(data[:status] == "A" || data[:email_verified]) && user
         raise "There is a registered user with this email already."
       end
 
