@@ -1,6 +1,6 @@
 # name: auth0
 # about: Authenticate with auth0
-# version: 1.0.0
+# version: 1.1.0
 # authors: Jose Romaniello
 
 require 'auth/oauth2_authenticator'
@@ -12,8 +12,6 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
   def after_authenticate(auth_token)
     return super(auth_token) if SiteSetting.auth0_connection != ''
 
-    puts "hi! #{Oauth2UserInfo.class.name}"
-
     result = Auth::Result.new
 
     oauth2_provider = auth_token[:provider]
@@ -21,46 +19,28 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
     data = auth_token[:info]
     result.email = email = data[:email]
     result.name = name = data[:name]
+    # nickname = data[:nickname].gsub(/[^\w*]/, '_')
 
-    oauth2_user_info = Oauth2UserInfo.where(uid: oauth2_uid, provider: oauth2_provider).first
-
-
-    if !oauth2_user_info && @opts[:trusted]
-
-      user = User.find_by_email(email)
-
-      if !data[:email_verified] && user
-        raise "There is a registered user with this email already."
-      end
-
-      if !user && SiteSetting.auth0_connection == ''
-        user = User.new()
-        user.email = email
-        user.username = data[:nickname].gsub(/[^\w*]/, '_')
-        user.name = data[:name]
-        user.active = true
-        saved = user.save
-
-        unless saved
-          Rails.logger.info "Error saving #{user.inspect}: #{user.errors.inspect}"
-          raise "error saving the user: #{user.errors.inspect}"
-        end
-      end
-
-      oauth2_user_info = Oauth2UserInfo.create(uid: oauth2_uid,
-                                               provider: oauth2_provider,
-                                               name: name,
-                                               email: email,
-                                               user_id: user.id)
-    end
-
-    result.user = oauth2_user_info.try(:user)
-    result.email_valid = @opts[:trusted]
+    oauth2_user_info = Oauth2UserInfo.where(uid: oauth2_uid, provider: 'Auth0').first
 
     result.extra_data = {
       uid: oauth2_uid,
-      provider: oauth2_provider
+      provider: 'Auth0',
+      name: name,
+      email: email,
     }
+
+    result.user = oauth2_user_info.try(:user)
+
+    if !result.user && !email.blank? && result.user = User.find_by_email(email)
+      Oauth2UserInfo.create({ uid: oauth2_uid,
+                              provider: 'Auth0',
+                              name: name,
+                              email: email,
+                              user_id: result.user.id })
+    end
+
+    result.email_valid = data[:email] && data[:email_verified]
 
     result
   end
@@ -130,32 +110,6 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
 end
 
 register_asset "javascripts/auth0.js"
-# Monkeypatch complete method to redirect back to root.
-after_initialize do
-  class Users::OmniauthCallbacksController < ApplicationController
-    def complete
-      return super() if SiteSetting.auth0_connection != ''
-
-      auth = request.env["omniauth.auth"]
-      auth[:session] = session
-
-      authenticator = self.class.find_authenticator(params[:provider])
-
-      @data = authenticator.after_authenticate(auth)
-      @data.authenticator_name = authenticator.name
-
-      if @data.user
-        user_found(@data.user)
-      elsif SiteSetting.invite_only?
-        @data.requires_invite = true
-      else
-        session[:authentication] = @data.session_data
-      end
-
-      redirect_to "/"
-    end
-  end
-end
 
 auth_provider :title => 'Auth0',
     :message => 'Log in via Auth0',

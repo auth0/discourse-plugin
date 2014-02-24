@@ -9,7 +9,7 @@
 
   var widget;
 
-  appendScript('//d19p4zemcycm7a.cloudfront.net/w2/auth0-widget-2.4.min.js', function () {
+  appendScript('//cdn.auth0.com/w2/auth0-widget-2.5.js', function () {
     var checkInterval = setInterval(function () {
       if (!Discourse.SiteSettings) return;
       clearInterval(checkInterval);
@@ -29,8 +29,14 @@
         if (!Discourse.SiteSettings.auth0_client_id || Discourse.SiteSettings.auth0_connection !== '') {
           return this._super();
         }
-        widget.signin();
+        widget.signin({
+          popup: true
+        });
         this.controllerFor('login').resetForm();
+      },
+      showCreateAccount: function () {
+        widget._hideSignIn();
+        this._super();
       }
     }
   });
