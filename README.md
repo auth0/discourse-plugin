@@ -1,7 +1,19 @@
 Discourse + Auth0
-========
+=================
 
-This is a [discourse](https://discourse.org) plugin to do Single Sign On using [Auth0](https://www.auth0.com).
+<a href="https://auth0.com">
+ <img src="https://s3.amazonaws.com/assets.auth0.com/logo/logo-180.png" />
+</a>
+
+[Auth0](https://auth0.com) is an authentication broker that supports social identity providers as well as enterprise identity providers such as Active Directory, LDAP, Office365, Google Apps, Salesforce.
+  
+<a href="http://discourse.org">
+  <img src="http://blog.ohheyworld.com/wp-content/uploads/2013/11/discourse-logo.png" />
+</a>
+
+[Discourse](http://discourse.org) is an open source forum software.
+
+This is a discourse plugin to do Single Sign On using Auth0.
 
 ### Demo: https://ask.auth0.com
 
@@ -64,4 +76,4 @@ Go to admin site settings for Auth0 and change the `auth0_connection` with the c
 
 ## License
 
-MIT - 2014 - AUTH10 LLC
+MIT - 2014 - AUTH0, INC.
