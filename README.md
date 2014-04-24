@@ -6,12 +6,16 @@ Discourse + Auth0
 </a>
 
 [Auth0](https://auth0.com) is an authentication broker that supports social identity providers as well as enterprise identity providers such as Active Directory, LDAP, Office365, Google Apps, Salesforce.
-  
+
+----------------------------------
+
 <a href="http://discourse.org">
   <img src="http://blog.ohheyworld.com/wp-content/uploads/2013/11/discourse-logo.png" />
 </a>
 
 [Discourse](http://discourse.org) is an open source forum software.
+
+----------------------------------
 
 This is a discourse plugin to do Single Sign On using Auth0.
 
