@@ -14,12 +14,10 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
     result = Auth::Result.new
 
-    oauth2_provider = auth_token[:provider]
     oauth2_uid = auth_token[:uid]
     data = auth_token[:info]
     result.email = email = data[:email]
     result.name = name = data[:name]
-    # nickname = data[:nickname].gsub(/[^\w*]/, '_')
 
     oauth2_user_info = Oauth2UserInfo.where(uid: oauth2_uid, provider: 'Auth0').first
 
@@ -47,9 +45,21 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
   def register_middleware(omniauth)
     omniauth.provider :auth0,
-        SiteSetting.auth0_client_id,
-        SiteSetting.auth0_client_secret,
-        SiteSetting.auth0_domain
+          :setup => lambda { |env|
+            strategy = env["omniauth.strategy"]
+            strategy.options[:client_id] = SiteSetting.auth0_client_id
+            strategy.options[:client_secret] = SiteSetting.auth0_client_secret
+            strategy.options[:connection] = SiteSetting.auth0_connection
+
+            domain = SiteSetting.auth0_domain
+
+            strategy.options[:domain] = domain
+            strategy.options[:client_options].site          = "https://#{domain}"
+            strategy.options[:client_options].authorize_url = "https://#{domain}/authorize"
+            strategy.options[:client_options].token_url     = "https://#{domain}/oauth/token"
+            strategy.options[:client_options].userinfo_url  = "https://#{domain}/userinfo"
+          }
+
   end
 end
 
@@ -63,22 +73,11 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   option :name, "auth0"
   option :domain, nil
   option :provider_ignores_state, true
-
-  args [:client_id, :client_secret, :domain, :provider_ignores_state]
-
-  def initialize(app, *args, &block)
-    super
-    @options.provider_ignores_state = args[3] unless args[3].nil?
-
-    @options.client_options.site          = "https://#{options[:domain]}"
-    @options.client_options.authorize_url = "https://#{options[:domain]}/authorize"
-    @options.client_options.token_url     = "https://#{options[:domain]}/oauth/token"
-    @options.client_options.userinfo_url  = "https://#{options[:domain]}/userinfo"
-  end
+  option :connection, ""
 
   def authorize_params
     super.tap do |param|
-      param[:connection] = AUTH0_CONNECTION
+      param[:connection] = options.connection
       PASSTHROUGHS.each do |p|
         param[p.to_sym] = request.params[p] if request.params[p]
       end
