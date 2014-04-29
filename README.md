@@ -38,7 +38,7 @@ This is a discourse plugin to do Single Sign On using Auth0.
 
 2. Run in your discourse root folder:
 
-	git clone git@github.com:auth0/discourse-plugin.git plugins/auth0
+	git clone https://github.com/auth0/discourse-plugin.git plugins/auth0
 
 3. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
 
