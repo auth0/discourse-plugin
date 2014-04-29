@@ -40,12 +40,15 @@ This is a discourse plugin to do Single Sign On using Auth0.
 
 	git clone https://github.com/auth0/discourse-plugin.git plugins/auth0
 
-3. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
+3. Not sure why, but Discourse and/or ruby likes to cache javascript assets. Please stop rails and execute the following command `bundle exec rake assets:clean && rm -rf tmp/cache/assets/` before continuing.
 
-4. Configure the Auth0 plugin in the admin section
+4. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
+
+5. Configure the Auth0 plugin in the admin section
 
 <img src="http://blog.auth0.com.s3.amazonaws.com/ss-2014-02-03T14-32-49.png">̇</img>
-5. Enjoy!
+
+Enjoy!
 
 ----
 
