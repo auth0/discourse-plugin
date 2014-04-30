@@ -35,7 +35,7 @@
         this.controllerFor('login').resetForm();
       },
       showCreateAccount: function () {
-        widget._hideSignIn();
+        if (widget) widget._hideSignIn();
         this._super();
       }
     }
