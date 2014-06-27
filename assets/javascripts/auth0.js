@@ -9,7 +9,7 @@
 
   var widget;
 
-  appendScript('//cdn.auth0.com/w2/auth0-widget-2.5.js', function () {
+  appendScript('//cdn.auth0.com/w2/auth0-widget-4.0.js', function () {
     var checkInterval = setInterval(function () {
       if (!Discourse.SiteSettings) return;
       clearInterval(checkInterval);
