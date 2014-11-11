@@ -34,19 +34,19 @@ This is a discourse plugin to do Single Sign On using Auth0.
 
 ## Installation
 
-1. Create an account on [Auth0](http://auth0.com) and register a new Rails application.
+-  Create an account on [Auth0](http://auth0.com) and open the application settings.
 
-2. Run in your discourse root folder:
+-  Run in your discourse root folder:
 
-	git clone https://github.com/auth0/discourse-plugin.git plugins/auth0
+```
+rake plugin:install repo=https://github.com/auth0/discourse-plugin name=auth0
+rm -rf tmp public/assets
+rake assets:precompile
+```
 
-3. Discourse and/or rails likes to cache javascript assets. Please stop rails and execute the following command:
+-  Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
 
-	bundle exec rake assets:clean && rm -rf tmp/cache/assets/
-
-4. Login as an adminstrator to your discourse setting using one of the pre-existing auth plugins.
-
-5. Configure the Auth0 plugin in the admin section
+-  Configure the Auth0 plugin in the admin section
 
 <img src="http://blog.auth0.com.s3.amazonaws.com/ss-2014-02-03T14-32-49.png">̇</img>
 
@@ -78,10 +78,14 @@ Go to admin site settings for Auth0 and change the `auth0_connection` with the c
 
 ![](https://s3.amazonaws.com/blog.auth0.com/login_discourse_ad.gif)
 
-## TODO
+### Give admin rights to an email
 
-* Add a plugin UI on the Admin section ot configure the secrets, etc.
-* Add support for using Discourse Login user/password input to call Auth0 on AD/LDAP connections using [auth0.js](https://github.com/auth0/auth0.js)
+```
+$ RAILS_ENV=production bundle exec rails c
+$ u = User.find_by_email('the-email-you-want-to-make-admin@whatever.com')
+$ u.admin = true
+$ u.save!
+```
 
 ## License
 
