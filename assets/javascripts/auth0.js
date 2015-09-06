@@ -31,6 +31,15 @@
     }, 300);
   });
 
+  Discourse.LoginController.reopen({
+    authenticationComplete: function () {
+      if (lock) {
+        lock.hide();
+      }
+      return this._super.apply(this, arguments);
+    }
+  });
+
   Discourse.ApplicationRoute.reopen({
     actions: {
       showLogin: function() {
