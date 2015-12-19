@@ -31,7 +31,7 @@
     }, 300);
   });
   
-  var LoginController = Discourse.__container__.lookup('controller:login');
+  var LoginController = require('discourse/controllers/login').default;
   LoginController.reopen({
     authenticationComplete: function () {
       if (lock) {
