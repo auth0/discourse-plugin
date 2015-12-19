@@ -30,8 +30,9 @@
 
     }, 300);
   });
-
-  Discourse.LoginController.reopen({
+  
+  var LoginController = Discourse.__container__.lookup('controller:login');
+  LoginController.reopen({
     authenticationComplete: function () {
       if (lock) {
         lock.hide();
@@ -39,8 +40,9 @@
       return this._super.apply(this, arguments);
     }
   });
-
-  Discourse.ApplicationRoute.reopen({
+  
+  var ApplicationRoute = require('discourse/routes/application').default;
+  ApplicationRoute.reopen({
     actions: {
       showLogin: function() {
         if (!Discourse.SiteSettings.auth0_client_id || Discourse.SiteSettings.auth0_connection !== '') {
