@@ -9,7 +9,7 @@
 
   var lock;
 
-  var script_url = '//cdn.auth0.com/js/lock-7.9.js';
+  var script_url = '//cdn.auth0.com/js/lock-8.0.js';
 
   appendScript(script_url, function () {
     var checkInterval = setInterval(function () {
@@ -30,8 +30,9 @@
 
     }, 300);
   });
-
-  Discourse.LoginController.reopen({
+  
+  var LoginController = require('discourse/controllers/login').default;
+  LoginController.reopen({
     authenticationComplete: function () {
       if (lock) {
         lock.hide();
@@ -39,8 +40,9 @@
       return this._super.apply(this, arguments);
     }
   });
-
-  Discourse.ApplicationRoute.reopen({
+  
+  var ApplicationRoute = require('discourse/routes/application').default;
+  ApplicationRoute.reopen({
     actions: {
       showLogin: function() {
         if (!Discourse.SiteSettings.auth0_client_id || Discourse.SiteSettings.auth0_connection !== '') {
