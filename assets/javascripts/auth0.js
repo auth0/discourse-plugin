@@ -9,7 +9,7 @@
 
   var lock;
 
-  var script_url = '//cdn.auth0.com/js/lock-8.0.js';
+  var script_url = '//cdn.auth0.com/js/lock-9.2.js';
 
   appendScript(script_url, function () {
     var checkInterval = setInterval(function () {
@@ -30,7 +30,7 @@
 
     }, 300);
   });
-  
+
   var LoginController = require('discourse/controllers/login').default;
   LoginController.reopen({
     authenticationComplete: function () {
@@ -40,7 +40,7 @@
       return this._super.apply(this, arguments);
     }
   });
-  
+
   var ApplicationRoute = require('discourse/routes/application').default;
   ApplicationRoute.reopen({
     actions: {
