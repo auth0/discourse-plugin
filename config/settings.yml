@@ -18,3 +18,11 @@ auth0:
     client: true
     default: ''
     shadowed_by_global: true
+  auth0_passwordless:
+    client: true
+    default: false
+    shadowed_by_global: true
+  auth0_passwordless_method:
+    client: true
+    default: 'magiclink'
+    shadowed_by_global: true

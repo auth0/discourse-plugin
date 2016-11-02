@@ -108,10 +108,14 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   end
 end
 
-register_asset "javascripts/auth0.js"
+register_asset "javascripts/lock.min.js" # 9.2
+register_asset "javascripts/lock-passwordless.min.js" # 2.2.3
+
+register_asset "stylesheets/auth0.scss"
 
 auth_provider :title => 'Auth0',
     :message => 'Log in via Auth0',
     :frame_width => 920,
     :frame_height => 800,
-    :authenticator => Auth0Authenticator.new('auth0', trusted: true)
+    :authenticator => Auth0Authenticator.new('auth0', trusted: true),
+    :full_screen_login => true
