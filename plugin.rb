@@ -29,21 +29,38 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
     }
 
     result.user = oauth2_user_info.try(:user)
-
-    if !result.user && !email.blank? && result.user = User.find_by_email(email)
-      Oauth2UserInfo.create({ uid: oauth2_uid,
-                              provider: 'Auth0',
-                              name: name,
-                              email: email,
-                              user_id: result.user.id })
-    end
-
     result.email_valid = data[:email] && data[:email_verified]
+
+    if !result.user && !email.blank? && result.email_valid
+      if result.user = User.find_by_email(email)
+        Oauth2UserInfo.create({ uid: oauth2_uid,
+                        provider: 'Auth0',
+                        name: name,
+                        email: email,
+                        user_id: result.user.id })
+      end
+    end
 
     result
   end
 
   def register_middleware(omniauth)
+    #Override OmniAuth on_failure in order to include error_description on redirect.
+    OmniAuth.config.on_failure = Proc.new { |env|
+      message_key = env['omniauth.error.type']
+      error_description = Rack::Utils.escape(env['omniauth.error'].error_reason)
+      new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{message_key}&error_description=#{error_description}"
+      Rack::Response.new(['302 Moved'], 302, 'Location' => new_path).finish
+    }
+
+    #Override OmniauthCallbacksController.failure in order to show error_description
+    Users::OmniauthCallbacksController.class_eval do
+      def failure
+        flash[:error] = params[:error_description] || I18n.t("login.omniauth_error")
+        render layout: 'no_ember'
+      end
+    end
+
     omniauth.provider :auth0,
           :setup => lambda { |env|
             strategy = env["omniauth.strategy"]
