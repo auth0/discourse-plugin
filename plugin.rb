@@ -1,6 +1,6 @@
 # name: auth0
 # about: Authenticate with auth0
-# version: 2.0.0
+# version: 2.0.1
 # authors: Jose Romaniello
 
 require 'auth/oauth2_authenticator'
