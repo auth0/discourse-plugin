@@ -5,3 +5,5 @@ en:
     auth0_client_secret: 'Your auth0 client secret. Find it on the application settings on the Auth0 dashboard.'
     auth0_callback_url: 'The url auth0 will redirect after authentication. Tipically https://your discourse url/auth/auth0/callback'
     auth0_connection: 'Optional. If you want to use only one authentication provider from Auth0.'
+    auth0_passwordless: 'Optional. Use passwordless authentication.'
+    auth0_passwordless_method: 'Optional. The passwordless method to use, options are: magiclink, emailcode, sms, social, socialOrMagiclink, socialOrEmailcode, socialOrSms'
