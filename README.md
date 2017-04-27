@@ -3,7 +3,7 @@ Discourse + Auth0
 
 This is a [Discourse](http://discourse.org) plugin to do Single Sign On using Auth0.
 
-### Demo: https://ask.auth0.com
+### Demo: https://auth0.com/forum/
 
 ![discourse login](https://dl.dropboxusercontent.com/u/21665105/discourse-login.gif)
 
@@ -18,7 +18,7 @@ This is a [Discourse](http://discourse.org) plugin to do Single Sign On using Au
 
 ## Installation
 
--  Create an account on [Auth0](http://auth0.com) and open the application settings.
+-  Create an account on [Auth0](https://auth0.com) and open the application settings.
 
 -  Install Discourse. [You can use this guide to install Discourse on any platform](https://github.com/discourse/discourse/blob/master/docs/INSTALL-digital-ocean.md)
 
@@ -107,7 +107,7 @@ If you have found a bug or if you have a feature request, please report them at 
 
 ## Author
 
-[Auth0](auth0.com)
+[Auth0](https://auth0.com)
 
 ## License
 
