@@ -40,7 +40,7 @@ Enjoy!
 
 In order to login to discourse the email of the user should be verified either at the Auth0 service level or in Discourse itself.
 
-Some Social Providers already verify the email but others not. If the user hasn't verified the email it will receive two emails the first one from Auth0 and the second one from Discourse. This can be confusing for the end-user, a simple fix is to only allow verified users to sign in to discouse by using an Auth0 Rule like this:
+Some Social Providers already verify the email but others not. If the user hasn't verified the email it will receive two emails the first one from Auth0 and the second one from Discourse. This can be confusing for the end-user, a simple fix is to only allow verified users to sign in to Discourse by using an Auth0 Rule like this:
 
 ```javascript
 function (user, context, callback) {
