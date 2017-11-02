@@ -9,7 +9,7 @@
 
   var lock;
 
-  var script_url = '//cdn.auth0.com/js/lock-9.2.js';
+  var script_url = '//cdn.auth0.com/js/lock/10.21/lock.min.js';
 
   appendScript(script_url, function () {
     var checkInterval = setInterval(function () {
@@ -26,7 +26,15 @@
       var client_id = Discourse.SiteSettings.auth0_client_id;
       var domain = Discourse.SiteSettings.auth0_domain;
 
-      lock = new Auth0Lock(client_id, domain);
+      lock = new Auth0Lock(client_id, domain, {
+        auth: {
+          redirectUrl: Discourse.SiteSettings.auth0_callback_url,
+          responseType: 'code',
+          params: {
+            scope: 'openid profile email',
+          }
+        }
+      });
 
     }, 300);
   });
@@ -49,11 +57,7 @@
           return this._super();
         }
 
-        lock.show({
-          popup:        true,
-          responseType: 'code',
-          callbackURL:  Discourse.SiteSettings.auth0_callback_url
-        });
+        lock.show();
 
         this.controllerFor('login').resetForm();
       },
@@ -73,10 +77,7 @@
           }
         } else {
           lock.show({
-            mode:         'signup',
-            popup:        true,
-            responseType: 'code',
-            callbackURL:  Discourse.SiteSettings.auth0_callback_url
+            allowSignUp: true
           });
         }
       }
