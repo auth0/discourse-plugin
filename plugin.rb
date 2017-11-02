@@ -4,6 +4,9 @@
 # authors: Jose Romaniello
 
 require 'auth/oauth2_authenticator'
+require 'base64'
+require 'uri'
+require 'omniauth-oauth2'
 
 require File.dirname(__FILE__) + '/../../app/models/oauth2_user_info'
 
@@ -46,14 +49,12 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
                       SiteSetting.auth0_client_id,
                       SiteSetting.auth0_client_secret,
                       SiteSetting.auth0_domain,
-                      setup: lambda { |env|
-                        strategy = env['omniauth.strategy']
-                        strategy.options[:provider_ignores_state] = true
+                      authorize_params: {
+                        scope: 'openid profile email'
                       }
   end
 end
 
-require 'omniauth-oauth2'
 class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   option :name, 'auth0'
 
@@ -149,7 +150,7 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   def client_info
     client_info = JSON.dump(
       name: 'omniauth-auth0',
-      version: '2.0.0'
+      version: '2.0.0'.freeze
     )
     Base64.urlsafe_encode64(client_info)
   end
