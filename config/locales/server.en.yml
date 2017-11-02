@@ -4,4 +4,3 @@ en:
     auth0_client_id: 'The Auth0 client ID. Find this on the list of clients within the Auth0 dashboard.'
     auth0_client_secret: 'The corresponding secret for the above Auth0 client ID, find this by visiting the settings for the client within the Auth0 dashboard.'
     auth0_callback_url: 'Where Auth0 will redirect to after authentication, typically https://<hostname>/auth/auth0/callback'
-    auth0_connection: '(Optional) Use a specific authentication provider from Auth0.'

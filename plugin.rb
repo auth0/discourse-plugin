@@ -8,7 +8,7 @@ require 'base64'
 require 'uri'
 require 'omniauth-oauth2'
 
-require File.dirname(__FILE__) + '/../../app/models/oauth2_user_info'
+require File.expand_path(File.dirname(__FILE__) + '/../../app/models/oauth2_user_info')
 
 class Auth0Authenticator < ::Auth::OAuth2Authenticator
   def after_authenticate(auth_token)
@@ -160,6 +160,5 @@ register_asset 'javascripts/auth0.js'
 
 auth_provider title: 'Auth0',
               message: 'Log in via Auth0',
-              frame_width: 920,
-              frame_height: 800,
+              full_screen_login: true,
               authenticator: Auth0Authenticator.new('auth0', trusted: true)
