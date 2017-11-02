@@ -9,8 +9,6 @@ require File.dirname(__FILE__) + '/../../app/models/oauth2_user_info'
 
 class Auth0Authenticator < ::Auth::OAuth2Authenticator
   def after_authenticate(auth_token)
-    return super(auth_token) if SiteSetting.auth0_connection != ''
-
     result = Auth::Result.new
 
     oauth2_uid = auth_token[:uid]
