@@ -58,10 +58,10 @@ end
 class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   option :name, 'auth0'
 
-  args %i[
-    client_id
-    client_secret
-    domain
+  args [
+    :client_id
+    :client_secret
+    :domain
   ]
 
   def client
