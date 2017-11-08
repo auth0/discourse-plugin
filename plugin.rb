@@ -59,8 +59,8 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   option :name, 'auth0'
 
   args [
-    :client_id
-    :client_secret
+    :client_id,
+    :client_secret,
     :domain
   ]
 
