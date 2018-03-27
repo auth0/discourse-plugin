@@ -109,7 +109,7 @@ class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   end
 end
 
-register_asset "javascripts/auth0.js"
+register_asset "javascripts/auth0-helper.js"
 
 auth_provider :title => 'Auth0',
     :message => 'Log in via Auth0',
