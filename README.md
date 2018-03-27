@@ -20,7 +20,7 @@ This is a [Discourse](http://discourse.org) plugin to do Single Sign On using Au
 
 -  Create an account on [Auth0](https://auth0.com) and open the application settings.
 
--  Install Discourse. [You can use this guide to install Discourse on any platform](https://github.com/discourse/discourse/blob/master/docs/INSTALL-digital-ocean.md)
+-  Install Discourse. [You can use this guide to install Discourse on any platform](https://github.com/discourse/discourse/blob/master/docs/INSTALL-cloud.md)
 
 -  Edit your `containers/app.yml` to include this under `hooks > after_code > exec > cmd`:
 
