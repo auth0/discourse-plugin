@@ -74,14 +74,6 @@ function (user, context, callback) {
 
 ![windows auth](https://s3.amazonaws.com/blog.auth0.com/login_discourse_kerberos-2.gif)
 
-### Using Discourse Login Dialog instead of Auth0
-
-You can keep using Discourse Login dialog and integrate only a specific connection from Auth0. It will show up as another button like the social providers.
-
-Go to admin site settings for Auth0 and change the `auth0_connection` with the connection name you want to use from Auth0.
-
-![](https://s3.amazonaws.com/blog.auth0.com/login_discourse_ad.gif)
-
 ### Give admin rights to an email
 
 ```

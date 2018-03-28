@@ -14,7 +14,3 @@ auth0:
     client: true
     default: 'http://your-discourse-url.com/auth/auth0/callback'
     shadowed_by_global: true
-  auth0_connection:
-    client: true
-    default: ''
-    shadowed_by_global: true
