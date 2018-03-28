@@ -1,3 +1,8 @@
+# DEPRECATED
+
+Please note that this plugin is no longer officially supported. We recommend using the [official Discourse OAuth2 plugin](https://github.com/discourse/discourse-oauth2-basic) instead.
+
+
 Discourse + Auth0
 =================
 
