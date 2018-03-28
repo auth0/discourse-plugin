@@ -10,8 +10,6 @@ require File.dirname(__FILE__) + "/../../app/models/oauth2_user_info"
 class Auth0Authenticator < ::Auth::OAuth2Authenticator
 
   def after_authenticate(auth_token)
-    return super(auth_token) if SiteSetting.auth0_connection != ''
-
     result = Auth::Result.new
 
     oauth2_uid = auth_token[:uid]
@@ -50,7 +48,6 @@ class Auth0Authenticator < ::Auth::OAuth2Authenticator
             strategy = env["omniauth.strategy"]
             strategy.options[:client_id] = SiteSetting.auth0_client_id
             strategy.options[:client_secret] = SiteSetting.auth0_client_secret
-            strategy.options[:connection] = SiteSetting.auth0_connection
 
             domain = SiteSetting.auth0_domain
 
@@ -67,18 +64,15 @@ end
 require 'omniauth-oauth2'
 class OmniAuth::Strategies::Auth0 < OmniAuth::Strategies::OAuth2
   PASSTHROUGHS = %w[
-    connection
     redirect_uri
   ]
 
   option :name, "auth0"
   option :domain, nil
   option :provider_ignores_state, true
-  option :connection, ""
 
   def authorize_params
     super.tap do |param|
-      param[:connection] = options.connection
       PASSTHROUGHS.each do |p|
         param[p.to_sym] = request.params[p] if request.params[p]
       end

@@ -3,13 +3,13 @@
   ApplicationRoute.reopen({
     actions: {
       showLogin: function() {
-        if (!Discourse.SiteSettings.auth0_client_id || Discourse.SiteSettings.auth0_connection !== '') {
+        if (!Discourse.SiteSettings.auth0_client_id) {
           return this._super();
         }
         window.location.href = "/auth/auth0";
       },
       showCreateAccount: function () {
-        if (!Discourse.SiteSettings.auth0_client_id || Discourse.SiteSettings.auth0_connection !== '') {
+        if (!Discourse.SiteSettings.auth0_client_id) {
           return this._super();
         }
 
